@@ -96,7 +96,7 @@ $(document).ready(function() {
         e.preventDefault();
         $("#displayBDay").text(value);
          
-        let myurl= "https://holidayapi.com/v1/holidays?key=6a44a9e5-815d-447c-a25f-cc0cabbbcde5&country=US&year=";
+        let myurl= "https://api.tuxx.co.uk/2.0/holidays/holidays.php?date=2017-01-01&regions=&lang=en";
         myurl += $("#year").val() + "&month=" + $("#month").val();
         console.log(myurl);
         $.ajax({
@@ -104,15 +104,7 @@ $(document).ready(function() {
             dataType : "json",
             success : function(parsed_json) {
                 console.log(parsed_json);
-                let location = parsed_json['name'];
-                let weather = parsed_json['weather'][0]['description'];
-                let temp = parsed_json['main']['temp'];
-                let weather_icon = parsed_json['weather'][0]['icon'];
-                let humidity = parsed_json['main']['humidity'];
-                let temp_min = parsed_json['main']['temp_min'];
-                let temp_max = parsed_json['main']['temp_max'];
-                let wind_speed = parsed_json['wind']['speed'];
-                let everything = "<img src=\"http://openweathermap.org/img/w/" + weather_icon + ".png\"/>"
+                let holiday = parsed_json['holidays'];
                 everything += "<ul>";
                 everything += "<li>Location: " + location;
                 everything += "<li>Weather: " + weather + " (" + temp + "&#8457;)";
@@ -120,7 +112,7 @@ $(document).ready(function() {
                 everything += "<li>Humidity: " + humidity + "%";
                 everything += "<li>Wind: " + wind_speed + " mph";
                 everything += "</ul>";
-                $("#weather").html(everything);
+                $("#thisDay").html(everything);
             }
         });
          
