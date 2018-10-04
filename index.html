@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Birthday Holidays!</title>
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Roboto+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <form>
-        What is your birthday?
-        <select id="month">
+    <div class="nav">
+        <h1>FindMyBirthday.us</h1>
+    </div>
+    <div class="background">
+        <div class="birthdayForm">
+            <h1>Find My Birthday!</h1>
+            <p>Search through our database to find English holidays <br> that correspond with your birthday</p>
+            <br>
+            <br>
+            <form>
+                What is your birthday?
+                <select id="month">
             <option value="January">January</option>
             <option value="February">February</option>
             <option value="March">March</option>
@@ -20,7 +33,7 @@
             <option value="November">November</option>
             <option value="December">December</option>
         </select>
-        <select id="day">
+                <select id="day">
             <option value="1st">1</option>
             <option value="2nd">2</option>
             <option value="3rd">3</option>
@@ -53,7 +66,7 @@
             <option value="30th">30</option>
             <option value="31st">31</option>
         </select>
-        <select id="year">
+                <select id="year">
             <option value="2003">2003</option>
             <option value="2002">2002</option>
             <option value="2001">2001</option>
@@ -79,102 +92,109 @@
             <option value="1981">1981</option>
             <option value="1980">1980</option>
         </select>
-        <br/>
-        <input id="birthdayButton" type="submit" value="Submit">
-    </form>
-    <p>Birthday:</p>
-    <textarea id="displayBDay">No Birthday</textarea>
-    <p>Interesting things that happened on this day in history:</p>
-    <div id="thisDay">No History</div>
-    
-<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script>
-$(document).ready(function() {
-     $("#birthdayButton").on('click', e => {
-        let value = $("#month").val() + " " + $("#day").val() + ", " + $("#year").val();
-        console.log(value);
-        e.preventDefault();
-        $("#displayBDay").text(value);
-         
-        let myurl= "https://holidayapi.com/v1/holidays?key=6a44a9e5-815d-447c-a25f-cc0cabbbcde5&country=US&year=";
-        myurl += $("#year").val() + "&month=" + $("#month").val();
-        console.log(myurl);
-        $.ajax({
-            url : myurl,
-            dataType : "json",
-            success : function(parsed_json) {
-                console.log(parsed_json);
-                let location = parsed_json['name'];
-                let weather = parsed_json['weather'][0]['description'];
-                let temp = parsed_json['main']['temp'];
-                let weather_icon = parsed_json['weather'][0]['icon'];
-                let humidity = parsed_json['main']['humidity'];
-                let temp_min = parsed_json['main']['temp_min'];
-                let temp_max = parsed_json['main']['temp_max'];
-                let wind_speed = parsed_json['wind']['speed'];
-                let everything = "<img src=\"http://openweathermap.org/img/w/" + weather_icon + ".png\"/>"
-                everything += "<ul>";
-                everything += "<li>Location: " + location;
-                everything += "<li>Weather: " + weather + " (" + temp + "&#8457;)";
-                everything += "<li>Low: " + temp_min + "&#8457; | High: " + temp_max + "&#8457;";
-                everything += "<li>Humidity: " + humidity + "%";
-                everything += "<li>Wind: " + wind_speed + " mph";
-                everything += "</ul>";
-                $("#weather").html(everything);
-            }
-        });
-         
-     });
-     
-     $("#searchButton").on("click", e => {
-        let value = $("#searchField").val();
-        console.log(value);
-        e.preventDefault();
-        let myurl = "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle="
-        myurl += value;
-        myurl += "&site=stackoverflow";
-        console.log(myurl);
-        $.ajax({
-            url: myurl,
-            dataType: "json",
-            success: function(parsed_json) {
-                console.log(parsed_json);
-                let everything = "<ul>";
-                let myArray = parsed_json["items"];
-                $.each(myArray, function(i, item) {
-                    console.log(myArray[i]);
-                    everything += "<li> <a href=\"" + myArray[i].link + "\">";
-                    everything += myArray[i].title;
-                    everything += "</a></li>";
+                <br/>
+                <input id="birthdayButton" type="submit" value="Submit">
+            </form>
+            <p>Birthday:</p>
+            <textarea id="displayBDay">No Birthday</textarea>
+            <p>Interesting things that happened on this day in history:</p>
+            <div id="thisDay">No History</div>
+
+            <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $("#birthdayButton").on('click', e => {
+                        let value = $("#month").val() + " " + $("#day").val() + ", " + $("#year").val();
+                        console.log(value);
+                        e.preventDefault();
+                        $("#displayBDay").text(value);
+
+                        let myurl = "https://holidayapi.com/v1/holidays?key=6a44a9e5-815d-447c-a25f-cc0cabbbcde5&country=US&year=";
+                        myurl += $("#year").val() + "&month=" + $("#month").val();
+                        console.log(myurl);
+                        $.ajax({
+                            url: myurl,
+                            dataType: "json",
+                            success: function(parsed_json) {
+                                console.log(parsed_json);
+                                let location = parsed_json['name'];
+                                let weather = parsed_json['weather'][0]['description'];
+                                let temp = parsed_json['main']['temp'];
+                                let weather_icon = parsed_json['weather'][0]['icon'];
+                                let humidity = parsed_json['main']['humidity'];
+                                let temp_min = parsed_json['main']['temp_min'];
+                                let temp_max = parsed_json['main']['temp_max'];
+                                let wind_speed = parsed_json['wind']['speed'];
+                                let everything = "<img src=\"http://openweathermap.org/img/w/" + weather_icon + ".png\"/>"
+                                everything += "<ul>";
+                                everything += "<li>Location: " + location;
+                                everything += "<li>Weather: " + weather + " (" + temp + "&#8457;)";
+                                everything += "<li>Low: " + temp_min + "&#8457; | High: " + temp_max + "&#8457;";
+                                everything += "<li>Humidity: " + humidity + "%";
+                                everything += "<li>Wind: " + wind_speed + " mph";
+                                everything += "</ul>";
+                                $("#weather").html(everything);
+                            }
+                        });
+
+                    });
+
+                    $("#searchButton").on("click", e => {
+                        let value = $("#searchField").val();
+                        console.log(value);
+                        e.preventDefault();
+                        let myurl = "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle="
+                        myurl += value;
+                        myurl += "&site=stackoverflow";
+                        console.log(myurl);
+                        $.ajax({
+                            url: myurl,
+                            dataType: "json",
+                            success: function(parsed_json) {
+                                console.log(parsed_json);
+                                let everything = "<ul>";
+                                let myArray = parsed_json["items"];
+                                $.each(myArray, function(i, item) {
+                                    console.log(myArray[i]);
+                                    everything += "<li> <a href=\"" + myArray[i].link + "\">";
+                                    everything += myArray[i].title;
+                                    everything += "</a></li>";
+                                });
+                                everything += "</ul>";
+                                console.log(everything);
+                                $("#answers").html(everything);
+                            }
+                        });
+                    });
+
+                    $("#cityField").keyup(function() {
+                        let url = "http://bioresearch.byu.edu/cs260/jquery/getcity.cgi?q=" + $("#cityField").val();
+                        $.getJSON(url, function(data) {
+                                let everything;
+                                everything = "<ul>";
+                                $.each(data, function(i, item) {
+                                    everything += "<li> " + data[i].city;
+                                });
+                                everything += "</ul>";
+                                $("#txtHint").html(everything);
+                            })
+                            .done(function() { console.log('getJSON request succeeded!'); })
+                            .fail(function(jqXHR, textStatus, errorThrown) {
+                                console.log('getJSON request failed! ' + textStatus);
+                                console.log("incoming " + jqXHR.responseText);
+                            })
+                            .always(function() {
+                                console.log('getJSON request ended!');
+                            });
+                    });
                 });
-                everything += "</ul>";
-                console.log(everything);
-                $("#answers").html(everything);
-            }
-        });
-    });
-     
-     $( "#cityField" ).keyup(function() {
-        let url = "http://bioresearch.byu.edu/cs260/jquery/getcity.cgi?q="+$("#cityField").val();
-        $.getJSON(url, function(data) {
-            let everything;
-            everything = "<ul>";
-            $.each(data, function(i,item) {
-            everything += "<li> "+data[i].city;
-        });
-        everything += "</ul>";
-        $("#txtHint").html(everything);
-    })
-    .done(function() { console.log('getJSON request succeeded!'); })
-    .fail(function(jqXHR, textStatus, errorThrown) { 
-        console.log('getJSON request failed! ' + textStatus); 
-        console.log("incoming "+jqXHR.responseText);
-    })
-    .always(function() { console.log('getJSON request ended!');
-        });
-    });
-});
-</script>
-    
+            </script>
+        </div>
+    </div>
+    </div>
+    <div class="footer">
+        <p>© Bryan and Kam</p>
+    </div>
 </body>
+
 </html>
