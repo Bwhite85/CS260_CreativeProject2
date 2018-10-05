@@ -108,16 +108,13 @@
     </form>
     <p>Birthday:</p>
     <textarea id="displayBDay">No Birthday</textarea>
-    <p>Foreign hHolidays on your birthday:</p>
+    <p>Foreign holidays on your birthday:</p>
     <div id="thisDay">No History</div>
     
 <script>
 $(document).ready(function() {
      $("#birthdayButton").on('click', e => {
-        let value = $("#month").val() + " " + $("#day").val() + ", " + $("#year").val();
-        console.log(value);
         e.preventDefault();
-        $("#displayBDay").text(value);
         let year = $("#year").val();
         let month = $("#month").val();
         let day = $("#day").val();
@@ -125,22 +122,61 @@ $(document).ready(function() {
         let myurl= "https://api.tuxx.co.uk/2.0/holidays/holidays.php?date=";
         myurl += year + "-" + month + "-" + day;
         myurl += "&regions="
-        myurl += country + "lang=en&app_id=8052da88&app_key=242259ebc0136fd5e9b4fbf5d72ed6b8";
+        myurl += country + "&lang=en&app_id=8052da88&app_key=242259ebc0136fd5e9b4fbf5d72ed6b8";
         console.log(myurl);
+        if(month == "01"){
+            month = "January";
+        }
+        else if(month == "02"){
+            month = "February";
+        }
+        else if(month == "03"){
+            month = "March";
+        }
+        else if(month == "04"){
+            month = "April";
+        }
+        else if(month == "05"){
+            month = "May";
+        }
+        else if(month == "06"){
+            month = "June";
+        }
+        else if(month == "07"){
+            month = "July";
+        }
+        else if(month == "08"){
+            month = "August";
+        }
+        else if(month == "09"){
+            month = "September";
+        }
+        else if(month == "10"){
+            month = "October";
+        }
+        else if(month == "11"){
+            month = "November";
+        }
+        else if(month == "12"){
+            month = "December";
+        }
+        let value = month + " " + $("#day").val() + ", " + $("#year").val();
+        console.log(value);
+        $("#displayBDay").text(value);
         $.ajax({
             url : myurl,
             dataType : "json",
             success : function(parsed_json) {
                 console.log(parsed_json);
                 let holiday = parsed_json['holiday'];
-                if(holiday == ""){
+                if(holiday == undefined){
                     holiday = "No holidays found for that country on your birthday, sorry!"; 
                 }
                 let country = $("#country").val();
                 let everything = "<ul>";
                 everything += "<li>Country: " + country;
                 everything += "<li>Holiday: " + holiday;
-                $("#thisDay").html(holiday);
+                $("#thisDay").html(everything);
             }
         });
          
