@@ -1,59 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Birthday Holidays!</title>
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Roboto+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
+
 <body>
-    <form>
-        What is your birthday?
-        <select id="month">
-            <option value="January">January</option>
-            <option value="February">February</option>
-            <option value="March">March</option>
-            <option value="April">April</option>
-            <option value="May">May</option>
-            <option value="June">June</option>
-            <option value="July">July</option>
-            <option value="August">August</option>
-            <option value="September">September</option>
-            <option value="October">October</option>
-            <option value="November">November</option>
-            <option value="December">December</option>
+    <div class="nav">
+        <h1>FindMyBirthday.us</h1>
+    </div>
+    <div class="background">
+        <div class="birthdayForm">
+            <h1>Find My Birthday!</h1>
+            <p>Search through our database to find foreign holidays <br> that correspond with your birthday</p>
+            <br>
+            <br>
+            <form>
+                What is your birthday?
+                <select id="month">
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
         </select>
-        <select id="day">
-            <option value="1st">1</option>
-            <option value="2nd">2</option>
-            <option value="3rd">3</option>
-            <option value="4th">4</option>
-            <option value="5th">5</option>
-            <option value="6th">6</option>
-            <option value="7th">7</option>
-            <option value="8th">8</option>
-            <option value="9th">9</option>
-            <option value="10th">10</option>
-            <option value="11th">11</option>
-            <option value="12th">12</option>
-            <option value="13th">13</option>
-            <option value="14th">14</option>
-            <option value="15th">15</option>
-            <option value="16th">16</option>
-            <option value="17th">17</option>
-            <option value="18th">18</option>
-            <option value="19th">19</option>
-            <option value="20th">20</option>
-            <option value="21st">21</option>
-            <option value="22nd">22</option>
-            <option value="23rd">23</option>
-            <option value="24th">24</option>
-            <option value="25th">25</option>
-            <option value="26th">26</option>
-            <option value="27th">27</option>
-            <option value="28th">28</option>
-            <option value="29th">29</option>
-            <option value="30th">30</option>
-            <option value="31st">31</option>
+                <select id="day">
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+            <option value="04">4</option>
+            <option value="05">5</option>
+            <option value="06">6</option>
+            <option value="07">7</option>
+            <option value="08">8</option>
+            <option value="09">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
         </select>
-        <select id="year">
+                <select id="year">
             <option value="2003">2003</option>
             <option value="2002">2002</option>
             <option value="2001">2001</option>
@@ -80,14 +94,23 @@
             <option value="1980">1980</option>
         </select>
         <br/>
+        <select id="country">
+            <option value="US">United States</option>
+            <option value="Germany">Germany</option>
+            <option value="France">France</option>
+            <option value="Spain">Spain</option>
+            <option value="Italy">Italy</optoin>
+            <option value="Russia">Russia</option>
+            <option vlaue="Netherlands">Netherlands</option>
+            <option value="China">China</option>
+        </select>
         <input id="birthdayButton" type="submit" value="Submit">
     </form>
     <p>Birthday:</p>
     <textarea id="displayBDay">No Birthday</textarea>
-    <p>Interesting things that happened on this day in history:</p>
+    <p>Foreign hHolidays on your birthday:</p>
     <div id="thisDay">No History</div>
     
-<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 $(document).ready(function() {
      $("#birthdayButton").on('click', e => {
@@ -95,78 +118,36 @@ $(document).ready(function() {
         console.log(value);
         e.preventDefault();
         $("#displayBDay").text(value);
-         
-        let myurl= "https://api.tuxx.co.uk/2.0/holidays/holidays.php?date=2017-01-01&regions=&lang=en";
-        myurl += $("#year").val() + "&month=" + $("#month").val();
+        let year = $("#year").val();
+        let month = $("#month").val();
+        let day = $("#day").val();
+        let country = $("#country").val();
+        let myurl= "https://api.tuxx.co.uk/2.0/holidays/holidays.php?date=";
+        myurl += year + "-" + month + "-" + day;
+        myurl += "&regions="
+        myurl += country + "lang=en&app_id=8052da88&app_key=242259ebc0136fd5e9b4fbf5d72ed6b8";
         console.log(myurl);
         $.ajax({
             url : myurl,
             dataType : "json",
             success : function(parsed_json) {
                 console.log(parsed_json);
-                let holiday = parsed_json['holidays'];
-                everything += "<ul>";
-                everything += "<li>Location: " + location;
-                everything += "<li>Weather: " + weather + " (" + temp + "&#8457;)";
-                everything += "<li>Low: " + temp_min + "&#8457; | High: " + temp_max + "&#8457;";
-                everything += "<li>Humidity: " + humidity + "%";
-                everything += "<li>Wind: " + wind_speed + " mph";
-                everything += "</ul>";
-                $("#thisDay").html(everything);
+                let holiday = parsed_json['holiday'];
+                if(holiday == ""){
+                    holiday = "No holidays found for that country on your birthday, sorry!"; 
+                }
+                let country = $("#country").val();
+                let everything = "<ul>";
+                everything += "<li>Country: " + country;
+                everything += "<li>Holiday: " + holiday;
+                $("#thisDay").html(holiday);
             }
         });
          
      });
-     
-     $("#searchButton").on("click", e => {
-        let value = $("#searchField").val();
-        console.log(value);
-        e.preventDefault();
-        let myurl = "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle="
-        myurl += value;
-        myurl += "&site=stackoverflow";
-        console.log(myurl);
-        $.ajax({
-            url: myurl,
-            dataType: "json",
-            success: function(parsed_json) {
-                console.log(parsed_json);
-                let everything = "<ul>";
-                let myArray = parsed_json["items"];
-                $.each(myArray, function(i, item) {
-                    console.log(myArray[i]);
-                    everything += "<li> <a href=\"" + myArray[i].link + "\">";
-                    everything += myArray[i].title;
-                    everything += "</a></li>";
-                });
-                everything += "</ul>";
-                console.log(everything);
-                $("#answers").html(everything);
-            }
-        });
-    });
-     
-     $( "#cityField" ).keyup(function() {
-        let url = "http://bioresearch.byu.edu/cs260/jquery/getcity.cgi?q="+$("#cityField").val();
-        $.getJSON(url, function(data) {
-            let everything;
-            everything = "<ul>";
-            $.each(data, function(i,item) {
-            everything += "<li> "+data[i].city;
-        });
-        everything += "</ul>";
-        $("#txtHint").html(everything);
-    })
-    .done(function() { console.log('getJSON request succeeded!'); })
-    .fail(function(jqXHR, textStatus, errorThrown) { 
-        console.log('getJSON request failed! ' + textStatus); 
-        console.log("incoming "+jqXHR.responseText);
-    })
-    .always(function() { console.log('getJSON request ended!');
-        });
-    });
 });
 </script>
-    
+
 </body>
+
 </html>
